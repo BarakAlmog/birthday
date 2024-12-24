@@ -1,0 +1,100 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Rubik', sans-serif;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: var(--bg-image) no-repeat center center fixed;
+  background-size: cover;
+}
+
+canvas {
+  display: block; /* Remove default inline spacing */
+  width: 100vw !important;
+  height: 100vh !important;
+  margin: 0;
+  padding: 0;
+}
+
+.score-modal {
+  position: fixed;
+  top: 40px;
+  left: 40px;
+  transform: none;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 20px 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+  max-width: 400px;
+}
+
+.score-modal h2 {
+  color: #2d2d2d;
+  margin-bottom: 10px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.score-modal .score {
+  font-size: 48px;
+  font-weight: 600;
+  color: #4a90e2;
+  margin: 10px 0;
+}
+
+.play-button {
+  background: #4a90e2;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  margin-top: 20px;
+}
+
+.play-button:hover {
+  background: #357abd;
+}
+
+.mobile-warning {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  text-align: center;
+  padding: 20px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Show warning on screens smaller than 768px */
+@media (max-width: 768px) {
+  .mobile-warning {
+    display: flex;
+  }
+
+  .game-container {
+    display: none;
+  }
+}
