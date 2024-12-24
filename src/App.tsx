@@ -25,6 +25,12 @@ import num8 from './assets/numbers/8.png'
 import num9 from './assets/numbers/9.png'
 import num10 from './assets/numbers/10.png'
 
+declare module 'matter-js' {
+  interface IChamferableBodyDefinition {
+    blockNumber?: number
+  }
+}
+
 function App() {
   const sceneRef = useRef<HTMLDivElement>(null)
   const [score, setScore] = useState(0)
@@ -100,6 +106,7 @@ function App() {
                 yScale: (boxSize - 4) / 300,
               },
             },
+            blockNumber: randomNumber,
           }
         )
         pyramid.push(box)
@@ -159,10 +166,6 @@ function App() {
     })
 
     // Function to get number from block's texture URL
-    const getBlockNumber = (texture: string) => {
-      const match = texture.match(/\/(\d+)\.png$/)
-      return match ? parseInt(match[1]) : 0
-    }
 
     // Add collision detection
     Events.on(engine, 'afterUpdate', () => {
@@ -172,17 +175,18 @@ function App() {
 
       pyramid.forEach((block) => {
         const initialY = initialPositions.get(block) || 0
-        // Only count blocks that have fallen at least 20px from their initial position
         const hasFallen = block.position.y > initialY + 20
 
         if (block.position.y > groundLevel && hasFallen && !groundedBlocks.has(block)) {
           groundedBlocks.add(block)
 
-          // Calculate current sum
-          const sum = Array.from(groundedBlocks).reduce((total, block) => {
-            const number = getBlockNumber(block.render.sprite?.texture || '')
-            return total + number
-          }, 0)
+          // Calculate sum using the stored blockNumber
+          const sum = Array.from(groundedBlocks).reduce(
+            (total, block: Matter.Body & { blockNumber: number }) => {
+              return total + block.blockNumber
+            },
+            0
+          )
 
           setScore(sum)
         }
