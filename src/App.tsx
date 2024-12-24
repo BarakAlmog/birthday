@@ -168,7 +168,7 @@ function App() {
     Events.on(engine, 'afterUpdate', () => {
       if (!hasShot) return
 
-      const groundLevel = window.innerHeight - 60
+      const groundLevel = window.innerHeight - 120
 
       pyramid.forEach((block) => {
         const initialY = initialPositions.get(block) || 0
